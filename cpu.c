@@ -4,13 +4,13 @@ int isNULLPCB(struct PCB process);
 
 int isNULLPCB(struct PCB process) {
 
-    if (process.process_id == 0 && process.arrival_timestamp == 0 && process.total_bursttime == 0 && process.execution_starttime == 0 && process.execution_endtime == 0 && process.remaining_bursttime == 0 && process.process_priority = 0) {
+    if (process.process_id == 0 && process.arrival_timestamp == 0 && process.total_bursttime == 0 && process.execution_starttime == 0 && process.execution_endtime == 0 && process.remaining_bursttime == 0 && process.process_priority == 0) {
         return 1;
     }
 
     return 0;
 }
-struct PCB handle_process_arrival_pp(PCB readyQueue[], int queueCount, PCB currProcess, PCB nextProcess, int currTime) {
+struct PCB handle_process_arrival_pp(struct PCB readyQueue[], int queueCount, struct PCB currProcess, struct PCB nextProcess, int currTime) {
 
     if(!isNULLPCB(currProcess)) {
         if(nextProcess.process_priority >= currProcess.process_priority) {

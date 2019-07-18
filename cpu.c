@@ -12,14 +12,12 @@ int isNULLPCB(struct PCB process) {
 }
 struct PCB handle_process_arrival_pp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, struct PCB current_process, struct PCB new_process, int timestamp) {
 
-    int count = queue_cnt;
-
     if(!isNULLPCB(current_process)) {
         if(new_process.process_priority >= current_process.process_priority) {
             new_process.execution_starttime = 0;
             new_process.execution_endtime = 0;
             new_process.remaining_bursttime = new_process.total_bursttime;
-            ready_queue[count] = new_process;
+            ready_queue[*queue_cnt] = new_process;
 
             return current_process;
         } else {
@@ -29,7 +27,7 @@ struct PCB handle_process_arrival_pp(struct PCB ready_queue[QUEUEMAX], int *queu
             new_process.remaining_bursttime = current_process.total_bursttime;
             current_process.execution_endtime = 0;
 
-            ready_queue[count] = current_process;
+            ready_queue[*queue_cnt] = current_process;
 
             return new_process;
         }

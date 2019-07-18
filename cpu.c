@@ -10,32 +10,32 @@ int isNULLPCB(struct PCB process) {
 
     return 0;
 }
-struct PCB handle_process_arrival_pp(struct PCB readyQueue[], int queueCount, struct PCB currProcess, struct PCB nextProcess, int currTime) {
+struct PCB handle_process_arrival_pp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, struct PCB current_process, struct PCB new_process, int timestamp) {
 
-    if(!isNULLPCB(currProcess)) {
-        if(nextProcess.process_priority >= currProcess.process_priority) {
-            nextProcess.execution_starttime = 0;
-            nextProcess.execution_endtime = 0;
-            nextProcess.remaining_bursttime = nextProcess.total_bursttime;
-            ready_queue[queue_cnt] = nextProcess;
+    if(!isNULLPCB(current_process)) {
+        if(new_process.process_priority >= current_process.process_priority) {
+            new_process.execution_starttime = 0;
+            new_process.execution_endtime = 0;
+            new_process.remaining_bursttime = new_process.total_bursttime;
+            ready_queue[queue_cnt] = new_process;
 
-            return currProcess;
+            return current_process;
         } else {
 
-            nextProcess.execution_starttime = currTime;
-            nextProcess.execution_endtime = currTime + currProcess.total_bursttime;
-            nextProcess.remaining_bursttime = currProcess.total_bursttime;
-            currProcess.execution_endtime = 0;
+            new_process.execution_starttime = timestamp;
+            new_process.execution_endtime = timestamp + current_process.total_bursttime;
+            new_process.remaining_bursttime = current_process.total_bursttime;
+            current_process.execution_endtime = 0;
 
-            ready_queue[queue_cnt] = currProcess;
+            ready_queue[queue_cnt] = current_process;
 
-            return nextProcess;
+            return new_process;
         }
     }
 
-    nextProcess.execution_starttime = currTime;
-    nextProcess.execution_endtime = currTime + currProcess.total_bursttime;
-    nextProcess.remaining_bursttime = currProcess.total_bursttime;
+    new_process.execution_starttime = timestamp;
+    new_process.execution_endtime = timestamp + current_process.total_bursttime;
+    new_process.remaining_bursttime = current_process.total_bursttime;
 
-    return nextProcess;
+    return new_process;
 }

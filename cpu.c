@@ -42,7 +42,31 @@ struct PCB handle_process_arrival_pp(struct PCB ready_queue[QUEUEMAX], int *queu
 }
 struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, int timestamp) {
 
-    return ready_queue[0];
+    struct PCB NULLPCB;
+    int i, max;
+
+    if(*queue_cnt = 0) {
+        NULLPCB.process_id = 0;
+        NULLPCB.arrival_timestamp = 0;
+        NULLPCB.total_bursttime = 0;
+        NULLPCB.execution_starttime = 0;
+        NULLPCB.execution_endtime = 0;
+        NULLPCB.remaining_bursttime = 0;
+        NULLPCB.process_priority = 0;
+
+        return NULLPCB;
+    }
+
+    max = 0;
+    for(i = 0; i < *queue_cnt; i++) {
+        if(ready_queue[max] < ready_queue[i].process_priority) {
+            max = i;
+        }
+    }
+
+    ready_queue[max].execution_starttime = timestamp;
+    ready_queue[max].execution_endtime = timestamp + ready_queue[max].remaining_bursttime;
+    return ready_queue[max];
 }
 struct PCB handle_process_arrival_srtp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, struct PCB current_process, struct PCB new_process, int time_stamp) {
 

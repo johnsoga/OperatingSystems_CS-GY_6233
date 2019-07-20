@@ -95,7 +95,7 @@ struct PCB handle_process_arrival_srtp(struct PCB ready_queue[QUEUEMAX], int *qu
 }
 struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, int timestamp) {
 
-    struct PCB NULLPCB;
+    struct PCB NULLPCB, tmp;
     int i, max;
 
     if(*queue_cnt = 0) {
@@ -117,14 +117,16 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
         }
     }
 
+    tmp = ready_queue[max];
+
     for(i = max; i < *queue_cnt-1; i++) {
         ready_queue[i] = ready_queue[i+1];
     }
-
     *queue_cnt-=1;
-    ready_queue[max].execution_starttime = timestamp;
-    ready_queue[max].execution_endtime = timestamp + ready_queue[max].remaining_bursttime;
-    return ready_queue[max];
+
+    tmp.execution_starttime = timestamp;
+    tmp.execution_endtime = timestamp + tmp.remaining_bursttime;
+    return tmp;
 }
 struct PCB handle_process_completion_srtp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, int timestamp) {
 

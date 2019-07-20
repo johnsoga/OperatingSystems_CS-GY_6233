@@ -59,7 +59,7 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
 
     max = 0;
     for(i = 0; i < *queue_cnt; i++) {
-        if(ready_queue[max] < ready_queue[i].process_priority) {
+        if(ready_queue[max].process_priority < ready_queue[i].process_priority) {
             max = i;
         }
     }

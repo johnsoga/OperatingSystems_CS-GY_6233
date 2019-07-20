@@ -117,6 +117,7 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
         }
     }
 
+    (*queue_cnt)--;
     ready_queue[max].execution_starttime = timestamp;
     ready_queue[max].execution_endtime = timestamp + ready_queue[max].remaining_bursttime;
     return ready_queue[max];

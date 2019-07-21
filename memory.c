@@ -69,21 +69,21 @@ struct MEMORY_BLOCK first_fit_allocate(int request_size, struct MEMORY_BLOCK mem
         return NULLBLOCK;
     }
 
-    if(memory_map[best_fit_size].segment_size == request_size) {
-        return memory_map[best_fit_size];
+    if(memory_map[first_fit_size].segment_size == request_size) {
+        return memory_map[first_fit_size];
     } else {
-        tmp.segment_size = memory_map[best_fit_size].segment_size - request_size;
+        tmp.segment_size = memory_map[first_fit_size].segment_size - request_size;
         tmp.process_id = 0;
-        tmp.end_address = memory_map[best_fit_size].end_address;
-        memory_map[best_fit_size].end_address = memory_map[best_fit_size].start_address + request_size-1;
-        tmp.start_address = memory_map[best_fit_size].end_address + 1;
-        memory_map[best_fit_size].segment_size = request_size;
-        memory_map[best_fit_size].process_id = process_id;
+        tmp.end_address = memory_map[first_fit_size].end_address;
+        memory_map[first_fit_size].end_address = memory_map[first_fit_size].start_address + request_size-1;
+        tmp.start_address = memory_map[first_fit_size].end_address + 1;
+        memory_map[first_fit_size].segment_size = request_size;
+        memory_map[first_fit_size].process_id = process_id;
 
         memory_map[*map_cnt] = tmp;
         (*map_cnt)++;
 
-        return memory_map[best_fit_size];
+        return memory_map[first_fit_size];
     }
 }
 struct MEMORY_BLOCK next_fit_allocate(int request_size, struct MEMORY_BLOCK   memory_map[MAPMAX],int *map_cnt, int process_id, int last_address) {

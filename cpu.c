@@ -130,10 +130,7 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
 
     tmp = ready_queue[highest_location];
 
-    // printf("TMP=%d,%d,%d,%d,%d,%d,%d    ", tmp.process_id,tmp.arrival_timestamp,tmp.total_bursttime,tmp.execution_starttime,tmp.execution_endtime,tmp.remaining_bursttime,tmp.process_priority);
-    printf("TMP=%x", &tmp);
-
-    for(i = highest_location-1; i < *queue_cnt-1; i++) {
+    for(i = highest_location; i < *queue_cnt-1; i++) {
         ready_queue[i] = ready_queue[i+1];
     }
     *queue_cnt-=1;

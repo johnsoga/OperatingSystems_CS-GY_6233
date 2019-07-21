@@ -69,28 +69,63 @@ struct MEMORY_BLOCK first_fit_allocate(int request_size, struct MEMORY_BLOCK mem
         return NULLBLOCK;
     }
 
-    if(memory_map[best_fit_size].segment_size == request_size) {
-        return memory_map[best_fit_size];
+    if(memory_map[first_fit_size].segment_size == request_size) {
+        return memory_map[first_fit_size];
     } else {
-        tmp.segment_size = memory_map[best_fit_size].segment_size - request_size;
+        tmp.segment_size = memory_map[first_fit_size].segment_size - request_size;
         tmp.process_id = 0;
-        tmp.end_address = memory_map[best_fit_size].end_address;
-        memory_map[best_fit_size].end_address = memory_map[best_fit_size].start_address + request_size-1;
-        tmp.start_address = memory_map[best_fit_size].end_address + 1;
-        memory_map[best_fit_size].segment_size = request_size;
-        memory_map[best_fit_size].process_id = process_id;
+        tmp.end_address = memory_map[first_fit_size].end_address;
+        memory_map[first_fit_size].end_address = memory_map[first_fit_size].start_address + request_size-1;
+        tmp.start_address = memory_map[first_fit_size].end_address + 1;
+        memory_map[first_fit_size].segment_size = request_size;
+        memory_map[first_fit_size].process_id = process_id;
 
         memory_map[*map_cnt] = tmp;
         (*map_cnt)++;
 
-        return memory_map[best_fit_size];
+        return memory_map[first_fit_size];
+
     }
 }
 struct MEMORY_BLOCK next_fit_allocate(int request_size, struct MEMORY_BLOCK   memory_map[MAPMAX],int *map_cnt, int process_id, int last_address) {
 
-    struct MEMORY_BLOCK tmp;
+    int i, bool_available_space, next_fit_size;
+    struct MEMORY_BLOCK NULLBLOCK, tmp;
 
-    return tmp;
+    bool_available_space = 0;
+    for(i = last_address; i < *map_cnt; i++) {
+        if((memory_map[i].segment_size >= request_size) && (memory_map[i].process_id == 0)) {
+            bool_available_space = 1;
+            next_fit_size = i;
+            break;
+        }
+    }
+
+    if(!bool_available_space) {
+        NULLBLOCK.start_address = 0;
+        NULLBLOCK.end_address = 0;
+        NULLBLOCK.segment_size = 0;
+        NULLBLOCK.process_id = 0;
+
+        return NULLBLOCK;
+    }
+
+    if(memory_map[next_fit_size].segment_size == request_size) {
+        return memory_map[next_fit_size];
+    } else {
+        tmp.segment_size = memory_map[next_fit_size].segment_size - request_size;
+        tmp.process_id = 0;
+        tmp.end_address = memory_map[next_fit_size].end_address;
+        memory_map[next_fit_size].end_address = memory_map[next_fit_size].start_address + request_size-1;
+        tmp.start_address = memory_map[next_fit_size].end_address + 1;
+        memory_map[next_fit_size].segment_size = request_size;
+        memory_map[next_fit_size].process_id = process_id;
+
+        memory_map[*map_cnt] = tmp;
+        (*map_cnt)++;
+
+        return memory_map[next_fit_size];
+    }
 }
 struct MEMORY_BLOCK worst_fit_allocate(int request_size, struct MEMORY_BLOCK memory_map[MAPMAX],int *map_cnt, int process_id) {
 

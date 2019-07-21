@@ -114,7 +114,8 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     highest_location = 0;
     for(i = 1; i < *queue_cnt; i++) {
         if(highest_priority < ready_queue[i].process_priority) {
-            highest_location = i+1;
+            highest_priority = ready_queue[i].process_priority;
+            highest_location = i;
         }
     }
 

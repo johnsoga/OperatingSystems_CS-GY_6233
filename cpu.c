@@ -96,7 +96,7 @@ struct PCB handle_process_arrival_srtp(struct PCB ready_queue[QUEUEMAX], int *qu
 struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, int timestamp) {
 
     struct PCB NULLPCB, tmp;
-    int i, max;
+    int i, highest_priority, highest_location;
 
     if(*queue_cnt == 0) {
         NULLPCB.process_id = 0;
@@ -110,14 +110,15 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
         return NULLPCB;
     }
 
-    max = 0;
-    for(i = 0; i < *queue_cnt; i++) {
-        if(ready_queue[max].process_priority < ready_queue[i].process_priority) {
-            max = i;
+    highest_priority = ready_queue[0].process_priority;
+    highest_location = 0;
+    for(i = 1; i < *queue_cnt; i++) {
+        if(highest_priority < ready_queue[i].process_priority) {
+            highest_location = i+1;
         }
     }
 
-    tmp = ready_queue[max];
+    tmp = ready_queue[highest_location];
 
     for(i = max-1; i < *queue_cnt-1; i++) {
         ready_queue[i] = ready_queue[i+1];

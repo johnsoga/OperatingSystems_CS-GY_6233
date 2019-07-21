@@ -120,7 +120,7 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
 
     tmp = ready_queue[highest_location];
 
-    for(i = max-1; i < *queue_cnt-1; i++) {
+    for(i = highest_location-1; i < *queue_cnt-1; i++) {
         ready_queue[i] = ready_queue[i+1];
     }
     *queue_cnt-=1;

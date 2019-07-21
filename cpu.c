@@ -100,7 +100,10 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     struct PCB NULLPCB, tmp;
     int i, highest_priority, highest_location;
 
-    printf("QueueCount=%d,", *queue_cnt);
+    printf("QueueCount=%d    ", *queue_cnt);
+    printf("Item1=%d,%d,%d,%d,%d,%d,%d    ", ready_queue[0].process_id,ready_queue[0].arrival_timestamp,ready_queue[0].total_bursttime,ready_queue[0].execution_starttime,ready_queue[0].execution_endtime,ready_queue[0].remaining_bursttime,ready_queue[0].process_priority);
+    printf("Item2=%d,%d,%d,%d,%d,%d,%d    ", ready_queue[1].process_id,ready_queue[1].arrival_timestamp,ready_queue[1].total_bursttime,ready_queue[1].execution_starttime,ready_queue[1].execution_endtime,ready_queue[1].remaining_bursttime,ready_queue[1].process_priority);
+    printf("Item3=%d,%d,%d,%d,%d,%d,%d    ", ready_queue[2].process_id,ready_queue[2].arrival_timestamp,ready_queue[2].total_bursttime,ready_queue[2].execution_starttime,ready_queue[2].execution_endtime,ready_queue[2].remaining_bursttime,ready_queue[2].process_priority);
 
     if(*queue_cnt == 0) {
         NULLPCB.process_id = 0;

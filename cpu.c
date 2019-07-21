@@ -100,7 +100,7 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     struct PCB NULLPCB, tmp;
     int i, highest_priority, highest_location;
 
-    printf("Something to help\n");
+    printf("QueueCount=%d,", *queue_cnt);
 
     if(*queue_cnt == 0) {
         NULLPCB.process_id = 0;

@@ -134,7 +134,7 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
 struct PCB handle_process_completion_srtp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, int timestamp) {
 
     struct PCB NULLPCB, tmp;
-    int i, highest_priority, highest_location;
+    int i, smallest_burst, smallest_burst_location;
 
     if(*queue_cnt == 0) {
         NULLPCB.process_id = 0;

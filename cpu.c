@@ -135,10 +135,10 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     }
     *queue_cnt-=1;
 
-    printf("QueueCount=%d    ", *queue_cnt);
-    for(i=0; i < *queue_cnt; i++) {
-        printf("Item%d=%d,%d,%d,%d,%d,%d,%d    ", (i+1),ready_queue[i].process_id,ready_queue[i].arrival_timestamp,ready_queue[i].total_bursttime,ready_queue[i].execution_starttime,ready_queue[i].execution_endtime,ready_queue[i].remaining_bursttime,ready_queue[i].process_priority);
-    }
+    // printf("QueueCount=%d    ", *queue_cnt);
+    // for(i=0; i < *queue_cnt; i++) {
+    //     printf("Item%d=%d,%d,%d,%d,%d,%d,%d    ", (i+1),ready_queue[i].process_id,ready_queue[i].arrival_timestamp,ready_queue[i].total_bursttime,ready_queue[i].execution_starttime,ready_queue[i].execution_endtime,ready_queue[i].remaining_bursttime,ready_queue[i].process_priority);
+    // }
 
     tmp.execution_starttime = timestamp;
     tmp.execution_endtime = timestamp + tmp.remaining_bursttime;

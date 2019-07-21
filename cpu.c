@@ -101,9 +101,9 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     int i, highest_priority, highest_location;
 
     // printf("QueueCount=%d    ", *queue_cnt);
-    // printf("Item1=%d,%d,%d,%d,%d,%d,%d    ", ready_queue[0].process_id,ready_queue[0].arrival_timestamp,ready_queue[0].total_bursttime,ready_queue[0].execution_starttime,ready_queue[0].execution_endtime,ready_queue[0].remaining_bursttime,ready_queue[0].process_priority);
-    // printf("Item2=%d,%d,%d,%d,%d,%d,%d    ", ready_queue[1].process_id,ready_queue[1].arrival_timestamp,ready_queue[1].total_bursttime,ready_queue[1].execution_starttime,ready_queue[1].execution_endtime,ready_queue[1].remaining_bursttime,ready_queue[1].process_priority);
-    // printf("Item3=%d,%d,%d,%d,%d,%d,%d    ", ready_queue[2].process_id,ready_queue[2].arrival_timestamp,ready_queue[2].total_bursttime,ready_queue[2].execution_starttime,ready_queue[2].execution_endtime,ready_queue[2].remaining_bursttime,ready_queue[2].process_priority);
+    // for(i=0; i < *queue_cnt; i++) {
+    //     printf("Item%d=%d,%d,%d,%d,%d,%d,%d    ", (i+1),ready_queue[i].process_id,ready_queue[i].arrival_timestamp,ready_queue[i].total_bursttime,ready_queue[i].execution_starttime,ready_queue[i].execution_endtime,ready_queue[i].remaining_bursttime,ready_queue[i].process_priority);
+    // }
 
     if(*queue_cnt == 0) {
         NULLPCB.process_id = 0;
@@ -126,17 +126,22 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
         }
     }
 
-    printf("Highest_Priority=%d, Highest_Location=%d", highest_priority, highest_location);
+    // printf("Highest_Priority=%d, Highest_Location=%d", highest_priority, highest_location);
 
     tmp = ready_queue[highest_location];
 
-    printf("TMP=%d,%d,%d,%d,%d,%d,%d    ", tmp.process_id,tmp.arrival_timestamp,tmp.total_bursttime,tmp.execution_starttime,tmp.execution_endtime,tmp.remaining_bursttime,tmp.process_priority);
+    // printf("TMP=%d,%d,%d,%d,%d,%d,%d    ", tmp.process_id,tmp.arrival_timestamp,tmp.total_bursttime,tmp.execution_starttime,tmp.execution_endtime,tmp.remaining_bursttime,tmp.process_priority);
     printf("TMP=%x", &tmp);
 
     for(i = highest_location-1; i < *queue_cnt-1; i++) {
         ready_queue[i] = ready_queue[i+1];
     }
     *queue_cnt-=1;
+
+    printf("QueueCount=%d    ", *queue_cnt);
+    for(i=0; i < *queue_cnt; i++) {
+        printf("Item%d=%d,%d,%d,%d,%d,%d,%d    ", (i+1),ready_queue[i].process_id,ready_queue[i].arrival_timestamp,ready_queue[i].total_bursttime,ready_queue[i].execution_starttime,ready_queue[i].execution_endtime,ready_queue[i].remaining_bursttime,ready_queue[i].process_priority);
+    }
 
     tmp.execution_starttime = timestamp;
     tmp.execution_endtime = timestamp + tmp.remaining_bursttime;

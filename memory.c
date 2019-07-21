@@ -35,7 +35,7 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
         tmp.segment_size = memory_map[best_fit_size].segment_size - request_size;
         tmp.process_id = 0;
         tmp.end_address = memory_map[best_fit_size].end_address;
-        memory_map[best_fit_size].end_address = memory_map[best_fit_size].start_address + request_size;
+        memory_map[best_fit_size].end_address = memory_map[best_fit_size].start_address + request_size-1;
         tmp.start_address = memory_map[best_fit_size].end_address + 1;
         memory_map[best_fit_size].segment_size = request_size;
         memory_map[best_fit_size].process_id = process_id;

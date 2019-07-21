@@ -100,11 +100,6 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     struct PCB NULLPCB, tmp;
     int i, highest_priority, highest_location;
 
-    // printf("QueueCount=%d    ", *queue_cnt);
-    // for(i=0; i < *queue_cnt; i++) {
-    //     printf("Item%d=%d,%d,%d,%d,%d,%d,%d    ", (i+1),ready_queue[i].process_id,ready_queue[i].arrival_timestamp,ready_queue[i].total_bursttime,ready_queue[i].execution_starttime,ready_queue[i].execution_endtime,ready_queue[i].remaining_bursttime,ready_queue[i].process_priority);
-    // }
-
     if(*queue_cnt == 0) {
         NULLPCB.process_id = 0;
         NULLPCB.arrival_timestamp = 0;
@@ -126,19 +121,11 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
         }
     }
 
-    // printf("Highest_Priority=%d, Highest_Location=%d", highest_priority, highest_location);
-
     tmp = ready_queue[highest_location];
-
     for(i = highest_location; i < *queue_cnt-1; i++) {
         ready_queue[i] = ready_queue[i+1];
     }
     *queue_cnt-=1;
-
-    // printf("QueueCount=%d    ", *queue_cnt);
-    // for(i=0; i < *queue_cnt; i++) {
-    //     printf("Item%d=%d,%d,%d,%d,%d,%d,%d    ", (i+1),ready_queue[i].process_id,ready_queue[i].arrival_timestamp,ready_queue[i].total_bursttime,ready_queue[i].execution_starttime,ready_queue[i].execution_endtime,ready_queue[i].remaining_bursttime,ready_queue[i].process_priority);
-    // }
 
     tmp.execution_starttime = timestamp;
     tmp.execution_endtime = timestamp + tmp.remaining_bursttime;
@@ -146,7 +133,39 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
 }
 struct PCB handle_process_completion_srtp(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, int timestamp) {
 
-    return ready_queue[0];
+    struct PCB NULLPCB, tmp;
+    int i, highest_priority, highest_location;
+
+    if(*queue_cnt == 0) {
+        NULLPCB.process_id = 0;
+        NULLPCB.arrival_timestamp = 0;
+        NULLPCB.total_bursttime = 0;
+        NULLPCB.execution_starttime = 0;
+        NULLPCB.execution_endtime = 0;
+        NULLPCB.remaining_bursttime = 0;
+        NULLPCB.process_priority = 0;
+
+        return NULLPCB;
+    }
+
+    smallest_burst = ready_queue[0].remaining_bursttime;
+    smallest_burst_location = 0;
+    for(i = 1; i < *queue_cnt; i++) {
+        if(!(smallest_burst < ready_queue[i].remaining_bursttime)) {
+            smallest_burst = ready_queue[i].remaining_bursttime;
+            smallest_burst_location = i;
+        }
+    }
+
+    tmp = ready_queue[smallest_burst_location];
+    for(i = smallest_burst_location; i < *queue_cnt-1; i++) {
+        ready_queue[i] = ready_queue[i+1];
+    }
+    *queue_cnt-=1;
+
+    tmp.execution_starttime = timestamp;
+    tmp.execution_endtime = timestamp + tmp.remaining_bursttime;
+    return tmp;
 }
 struct PCB handle_process_completion_rr(struct PCB ready_queue[QUEUEMAX], int *queue_cnt, int time_stamp, int time_quantum) {
 

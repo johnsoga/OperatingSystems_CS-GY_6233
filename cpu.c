@@ -98,7 +98,7 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     struct PCB NULLPCB, tmp;
     int i, max;
 
-    if(*queue_cnt = 0) {
+    if(*queue_cnt == 0) {
         NULLPCB.process_id = 0;
         NULLPCB.arrival_timestamp = 0;
         NULLPCB.total_bursttime = 0;

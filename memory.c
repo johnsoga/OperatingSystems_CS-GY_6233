@@ -56,13 +56,13 @@ struct MEMORY_BLOCK next_fit_allocate(int request_size, struct MEMORY_BLOCK   me
 
     struct MEMORY_BLOCK tmp;
 
-    return tmp;eturn struct MEMORY_BLOCK;
+    return tmp;
 }
 struct MEMORY_BLOCK worst_fit_allocate(int request_size, struct MEMORY_BLOCK memory_map[MAPMAX],int *map_cnt, int process_id) {
 
     struct MEMORY_BLOCK tmp;
 
-    return tmp;return struct MEMORY_BLOCK;
+    return tmp;
 }
 void release_memory(struct MEMORY_BLOCK freed_block, struct MEMORY_BLOCK memory_map[MAPMAX],int *map_cnt) {
 

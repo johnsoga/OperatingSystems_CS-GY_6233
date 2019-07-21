@@ -106,8 +106,6 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
     // printf("Item3=%d,%d,%d,%d,%d,%d,%d    ", ready_queue[2].process_id,ready_queue[2].arrival_timestamp,ready_queue[2].total_bursttime,ready_queue[2].execution_starttime,ready_queue[2].execution_endtime,ready_queue[2].remaining_bursttime,ready_queue[2].process_priority);
 
     if(*queue_cnt == 0) {
-
-        printf("What the hell happened");
         NULLPCB.process_id = 0;
         NULLPCB.arrival_timestamp = 0;
         NULLPCB.total_bursttime = 0;
@@ -127,6 +125,8 @@ struct PCB handle_process_completion_pp(struct PCB ready_queue[QUEUEMAX], int *q
             highest_location = i;
         }
     }
+
+    printf("Highest_Priority=%d, Highest_Location=%d", highest_priority, highest_location);
 
     tmp = ready_queue[highest_location];
 

@@ -1,7 +1,5 @@
 #include "oslabs.h"
 
-##true is 1, false is 0
-
 struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memory_map[MAPMAX],int *map_cnt, int process_id) {
 
     int i, bool_available_space, best_fit_size, first_guess;

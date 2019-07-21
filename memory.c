@@ -14,21 +14,24 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
                 first_guess = 0;
             }
             bool_available_space = 1;
-            if(memory_map[i].segment_size < memory_map[best_fit_size]) {
+            if(memory_map[i].segment_size < memory_map[best_fit_size].segment_size) {
                 best_fit_size = i;
             }
         }
     }
 
     if(!bool_available_space) {
-        NULLBLOCK = {0,0,0,0};
+        NULLBLOCK.start_address = 0;
+        NULLBLOCK.end_address = 0;
+        NULLBLOCK.segment_size = 0;
+        NULLBLOCK.process_id = 0;
+
         return NULLBLOCK;
     }
 
     if(memory_map[best_fit_size].segment_size == request_size) {
         return memory_map[best_fit_size];
     } else {
-        tmp = {0,0,0,0};
         tmp.segment_size = memory_map[best_fit_size].segment_size - request_size;
         tmp.process_id = 0;
         tmp.end_address = memory_map[best_fit_size].end_address;

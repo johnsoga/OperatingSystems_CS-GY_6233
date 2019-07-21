@@ -6,7 +6,7 @@ struct MEMORY_BLOCK best_fit_allocate(int request_size, struct MEMORY_BLOCK memo
     struct MEMORY_BLOCK NULLBLOCK, tmp;
 
     bool_available_space = 0;
-    first_guess = 1
+    first_guess = 1;
     for(i = 0; i < *map_cnt; i++) {
         if((memory_map[i].segment_size >= request_size) && (memory_map[i].process_id == 0)) {
             if(first_guess) {

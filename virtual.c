@@ -7,10 +7,10 @@ int count_page_faults_fifo(struct PTE page_table[TABLEMAX],int table_cnt, int re
     page_faults = 0;
     current_timestamp = 1;
     for(i = 0; i < reference_cnt; i++) {
-        // if(page_table[refrence_string[i]].is_valid == 1) {
-        //     page_table[refrence_string[i]].last_access_timestamp = current_timestamp;
-        //     page_table[refrence_string[i]].reference_count++;
-        // } else {
+        if(page_table[refrence_string[i]].is_valid == 1) {
+            page_table[refrence_string[i]].last_access_timestamp = current_timestamp;
+            page_table[refrence_string[i]].reference_count++;
+        } //else {
         //     if(frame_cnt != 0) {
         //         (frame_cnt)--;
         //         page_table[refrence_string[i]].is_valid = 1;

@@ -122,6 +122,7 @@ int process_page_access_lru(struct PTE page_table[TABLEMAX],int *table_cnt, int 
                             smallest_ref = page_table[i].reference_count;
                             smallest_ref_location = i;
                         }
+                    }
                 }
             }
 

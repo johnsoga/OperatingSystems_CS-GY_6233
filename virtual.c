@@ -1,10 +1,5 @@
 #include "oslabs.h"
 
-
-each process has a table of PTEs
-each process has a pool frames
-each page is a PTE entry in table
-
 int process_page_access_fifo(struct PTE page_table[TABLEMAX],int *table_cnt, int page_number, int frame_pool[POOLMAX],int *frame_cnt, int current_timestamp) {
 
     int i, smallest_arrival, smallest_arrival_location;

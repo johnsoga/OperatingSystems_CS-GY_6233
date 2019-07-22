@@ -29,15 +29,15 @@ int count_page_faults_fifo(struct PTE page_table[TABLEMAX],int table_cnt, int re
                 }
 
                 page_table[smallest_last_location].is_valid = 0;
-                page_table[page_number].frame_number = page_table[smallest_last_location].frame_number;
+                page_table[refrence_string[i]].frame_number = page_table[smallest_last_location].frame_number;
                 page_table[smallest_last_location].frame_number = -1;
                 page_table[smallest_last_location].arrival_timestamp = 0;
                 page_table[smallest_last_location].last_access_timestamp = 0;
                 page_table[smallest_last_location].reference_count = 0;
-                page_table[page_number].is_valid = 1;
-                page_table[page_number].arrival_timestamp = current_timestamp;
-                page_table[page_number].last_access_timestamp = current_timestamp;
-                page_table[page_number].reference_count = 1;
+                page_table[refrence_string[i]].is_valid = 1;
+                page_table[refrence_string[i]].arrival_timestamp = current_timestamp;
+                page_table[refrence_string[i]].last_access_timestamp = current_timestamp;
+                page_table[refrence_string[i]].reference_count = 1;
                 page_faults++;
             }
         }

@@ -172,5 +172,43 @@ struct MEMORY_BLOCK worst_fit_allocate(int request_size, struct MEMORY_BLOCK mem
 }
 void release_memory(struct MEMORY_BLOCK freed_block, struct MEMORY_BLOCK memory_map[MAPMAX],int *map_cnt) {
 
-    return;
+    int i, freed_location;
+
+    for(i = 0; i < *map_cnt; i++) {
+        if(memory_map[i].process_id == freed_block.process_id) {
+            freed_location = i;
+        }
+    }
+
+    if((memory_map[freed_location-1].process_id == 0) && (memory_map[freed_location+1].process_id == 0)) {
+        freed_block.process_id = 0;
+        memory_map[freed_location-1].end_address = memory_map[freed_location+1].end_address;
+        memory_map[freed_location-1].segment_size = memory_map[freed_location-1].segment_size + freed_block.segment_size + memory_map[freed_location+1].segment_size;
+
+        for(i = freed_location; i < *map_cnt-2; i++) {
+            memory_map[i] = memory_map[i+2];
+        }
+        *map_cnt-=2;
+
+    } else if(memory_map[freed_location-1].process_id == 0) {
+        freed_block.process_id = 0;
+        memory_map[freed_location-1].end_address = freed_block.end_address;
+        memory_map[freed_location-1].segment_size = memory_map[freed_location-1].segment_size + freed_block.segment_size;
+
+        for(i = freed_location; i < *map_cnt-1; i++) {
+            memory_map[i] = memory_map[i+1];
+        }
+        *map_cnt-=1;
+    } else if(memory_map[freed_location+1].process_id == 0) {
+        freed_block.process_id = 0;
+        freed_block.end_address = memory_map[freed_location+1].end_address;
+        freed_block.segment_size = freed_block.segment_size + memory_map[freed_location].segment_size;
+
+        for(i = freed_location+1; i < *map_cnt-1; i++) {
+            memory_map[i] = memory_map[i+1];
+        }
+        *map_cnt-=1;
+    } else {
+        freed_block.process_id = 0;
+    }
 }

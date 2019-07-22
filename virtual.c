@@ -2,24 +2,24 @@
 
 int count_page_faults_fifo(struct PTE page_table[TABLEMAX],int table_cnt, int refrence_string[REFERENCEMAX],int reference_cnt,int frame_pool[POOLMAX],int frame_cnt) {
 
-    int i, current_timestamp, page_faults, smallest_last, smallest_last_location;
+    int i, curr_time, page_faults, smallest_last, smallest_last_location;
 
     page_faults = 0;
-    current_timestamp = 1;
+    curr_time = 1;
     for(i = 0; i < reference_cnt; i++) {
         if(page_table[refrence_string[i]].is_valid == 1) {
             page_table[refrence_string[i]].last_access_timestamp = current_timestamp;
             page_table[refrence_string[i]].reference_count++;
-        } //else {
-        //     if(frame_cnt != 0) {
-        //         (frame_cnt)--;
-        //         page_table[refrence_string[i]].is_valid = 1;
-        //         page_table[refrence_string[i]].frame_number = frame_pool[frame_cnt];
-        //         page_table[refrence_string[i]].arrival_timestamp = current_timestamp;
-        //         page_table[refrence_string[i]].last_access_timestamp = current_timestamp;
-        //         page_table[refrence_string[i]].reference_count = 1;
-        //         page_faults++;
-        //     } else {
+        } else {
+            if(frame_cnt != 0) {
+                (frame_cnt)--;
+                page_table[refrence_string[i]].is_valid = 1;
+                page_table[refrence_string[i]].frame_number = frame_pool[frame_cnt];
+                page_table[refrence_string[i]].arrival_timestamp = curr_time;
+                page_table[refrence_string[i]].last_access_timestamp = curr_time;
+                page_table[refrence_string[i]].reference_count = 1;
+                page_faults++;
+            } //else {
         //         smallest_last = current_timestamp;
         //         for(i = 0; i < table_cnt; i++) {
         //             if((page_table[i].is_valid == 1) && (page_table[i].last_access_timestamp < smallest_last)) {
@@ -40,8 +40,8 @@ int count_page_faults_fifo(struct PTE page_table[TABLEMAX],int table_cnt, int re
         //         page_table[refrence_string[i]].reference_count = 1;
         //         page_faults++;
         //     }
-        // }
-        // current_timestamp++;
+        }
+        curr_time++;
     }
     return page_faults;
 }

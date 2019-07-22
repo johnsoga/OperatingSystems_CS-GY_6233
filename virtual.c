@@ -65,8 +65,8 @@ int count_page_faults_lfu(struct PTE page_table[TABLEMAX],int table_cnt, int ref
                 page_table[refrence_string[i]].reference_count = 1;
                 page_faults++;
             } else {
-                smallest_ref = curr_time;
                 first_guess = 1;
+                smallest_ref = 0;
                 for(j = 0; j < table_cnt; j++) {
                     if(page_table[j].is_valid == 1) {
                         if(first_guess) {
@@ -74,12 +74,12 @@ int count_page_faults_lfu(struct PTE page_table[TABLEMAX],int table_cnt, int ref
                             smallest_ref_location = j;
                             first_guess = 0;
                         } else if(page_table[j].reference_count < smallest_ref) {
-                            smallest_ref = page_table[i].reference_count;
-                            smallest_ref_location = i;
+                            smallest_ref = page_table[j].reference_count;
+                            smallest_ref_location = j;
                         } else if(page_table[j].reference_count == smallest_ref) {
                             if(page_table[j].arrival_timestamp < page_table[smallest_ref_location].arrival_timestamp) {
-                                smallest_ref = page_table[i].reference_count;
-                                smallest_ref_location = i;
+                                smallest_ref = page_table[j].reference_count;
+                                smallest_ref_location = j;
                             }
                         }
                     }

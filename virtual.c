@@ -12,12 +12,12 @@ int count_page_faults_fifo(struct PTE page_table[TABLEMAX],int table_cnt, int re
             page_table[refrence_string[i]].reference_count++;
         } else {
             if(frame_cnt != 0) {
-                (*frame_cnt)--;
-                page_table[page_number].is_valid = 1;
-                page_table[page_number].frame_number = frame_pool[*frame_cnt];
-                page_table[page_number].arrival_timestamp = current_timestamp;
-                page_table[page_number].last_access_timestamp = current_timestamp;
-                page_table[page_number].reference_count = 1;
+                (frame_cnt)--;
+                page_table[refrence_string[i]].is_valid = 1;
+                page_table[refrence_string[i]].frame_number = frame_pool[frame_cnt];
+                page_table[refrence_string[i]].arrival_timestamp = current_timestamp;
+                page_table[refrence_string[i]].last_access_timestamp = current_timestamp;
+                page_table[refrence_string[i]].reference_count = 1;
                 page_faults++;
             } else {
                 smallest_last = current_timestamp;

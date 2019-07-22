@@ -1,6 +1,4 @@
 #include "oslabs.h"
-#include <stdio.h>
-
 
 int isNULLPCB(struct PCB process);
 

@@ -22,7 +22,13 @@ struct RCB handle_request_arrival_fcfs(struct RCB request_queue[QUEUEMAX], int *
 }
 struct RCB handle_request_arrival_look(struct RCB request_queue[QUEUEMAX],int *queue_cnt, struct RCB current_request, struct RCB new_request, int timestamp) {
 
-    return current_request;
+    if(isNULLRCB(current_request)) {
+        return new_request;
+    } else {
+        request_queue[*queue_cnt] = new_request;
+        (*queue_cnt)++;
+        return current_request;
+    }
 }
 struct RCB handle_request_arrival_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt, struct RCB current_request, struct RCB new_request, int timestamp) {
 

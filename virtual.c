@@ -131,8 +131,8 @@ int count_page_faults_lru(struct PTE page_table[TABLEMAX],int table_cnt, int ref
                             smallest_last_location = j;
                             first_guess = 0;
                         } else if(page_table[j].last_access_timestamp < smallest_last) {
-                            smallest_ref = page_table[j].last_access_timestamp;
-                            smallest_ref_location = j;
+                            smallest_last = page_table[j].last_access_timestamp;
+                            smallest_last_location = j;
                         }
                     }
                 }

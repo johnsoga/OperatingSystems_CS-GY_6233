@@ -12,7 +12,7 @@ int isNULLRCB(struct RCB request) {
 }
 struct RCB handle_request_arrival_fcfs(struct RCB request_queue[QUEUEMAX], int *queue_cnt, struct RCB current_request, struct RCB new_request, int timestamp) {
 
-    if(!isNULLRCB(current_request)) {
+    if(isNULLRCB(current_request)) {
         return new_request;
     } else {
         request_queue[*queue_cnt] = new_request;
@@ -38,5 +38,5 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
 }
 struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder) {
 
-    struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder); 
+    struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder);
 }

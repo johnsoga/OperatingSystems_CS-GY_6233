@@ -59,6 +59,7 @@ struct RCB handle_request_completion_fcfs(struct RCB request_queue[QUEUEMAX],int
         }
     }
 
+    (*queue_cnt)--;
     return request_queue[shortest_arrival_location];
 }
 struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int  *queue_cnt, int current_cylinder, int scan_direction) {

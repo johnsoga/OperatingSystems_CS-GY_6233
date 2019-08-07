@@ -1,4 +1,5 @@
 #include "oslabs.h"
+#include <stdio.h>
 
 int isNULLRCB(struct RCB request);
 
@@ -24,8 +25,10 @@ struct RCB handle_request_arrival_look(struct RCB request_queue[QUEUEMAX],int *q
 
     printf("count %d", *queue_cnt);
     if(isNULLRCB(current_request)) {
+        printf("its null");
         return new_request;
     } else {
+        printf("not null");
         request_queue[*queue_cnt] = new_request;
         (*queue_cnt)++;
         return current_request;

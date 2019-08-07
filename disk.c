@@ -31,7 +31,7 @@ struct RCB handle_request_arrival_look(struct RCB request_queue[QUEUEMAX],int *q
 
         request_queue[*queue_cnt] = new_request;
         (*queue_cnt)++;
-        return new_request;
+        return current_request;
     }
 }
 struct RCB handle_request_arrival_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt, struct RCB current_request, struct RCB new_request, int timestamp) {

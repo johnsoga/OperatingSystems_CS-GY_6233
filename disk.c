@@ -192,7 +192,7 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
 struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder) {
 
     struct RCB NULLRCB, tmp;
-    int i, first_guess, closest_cylinder_size, closest_cylinder_location, abs;
+    int i, first_guess, closest_cylinder_size, closest_cylinder_location, diff;
 
     if(*queue_cnt == 0) {
         NULLRCB.request_id = 0;
@@ -210,13 +210,13 @@ struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int
             if(first_guess) {
                 closest_cylinder_location = i;
                 closest_cylinder_size = request_queue[i].cylinder;
-                abs = abs(request_queue[i].cylinder - current_cylinder);
+                diff = abs(request_queue[i].cylinder - current_cylinder);
                 first_guess = 0;
-            } else if(abs(request_queue[i].cylinder - current_cylinder) < abs) {
+            } else if(abs(request_queue[i].cylinder - current_cylinder) < diff) {
                 closest_cylinder_location = i;
                 closest_cylinder_size = request_queue[i].cylinder;
-                abs = abs(request_queue[i].cylinder - current_cylinder);
-            } else if(abs(request_queue[i].cylinder - current_cylinder) == abs) {
+                diff = abs(request_queue[i].cylinder - current_cylinder);
+            } else if(abs(request_queue[i].cylinder - current_cylinder) == diff) {
                 if(request_queue[i].arrival_timestamp < request_queue[closest_cylinder_location].arrival_timestamp) {
                     closest_cylinder_location = i;
                 }

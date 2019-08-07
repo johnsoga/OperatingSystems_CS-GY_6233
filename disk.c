@@ -98,8 +98,13 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
         }
     }
     if(shortest_arrival_location > 0) {
-        (*queue_cnt)--;
-        return request_queue[shortest_arrival_location];
+        tmp = request_queue[shortest_arrival_location];
+
+        for(i = shortest_arrival_location; i < *queue_cnt-1; i++) {
+            request_queue[i] = request_queue[i+1];
+        }
+        *queue_cnt-=1;
+        return tmp;
     }
 
     if(scan_direction == 1) {
@@ -118,8 +123,13 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
             }
         }
         if(closest_cylinder_location > 0) {
-            (*queue_cnt)--;
-            return request_queue[closest_cylinder_location];
+            tmp = request_queue[closest_cylinder_location];
+
+            for(i = closest_cylinder_location; i < *queue_cnt-1; i++) {
+                request_queue[i] = request_queue[i+1];
+            }
+            *queue_cnt-=1;
+            return tmp;
         }
         closest_cylinder_location = 0;
         closest_cylinder_size = request_queue[0].cylinder;
@@ -129,7 +139,14 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
                 closest_cylinder_size = request_queue[i].cylinder;
             }
         }
-        return request_queue[closest_cylinder_location];
+
+        tmp = request_queue[closest_cylinder_location];
+
+        for(i = closest_cylinder_location; i < *queue_cnt-1; i++) {
+            request_queue[i] = request_queue[i+1];
+        }
+        *queue_cnt-=1;
+        return tmp;
     }
 
     if(scan_direction == 0) {
@@ -148,8 +165,13 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
             }
         }
         if(closest_cylinder_location > 0) {
-            (*queue_cnt)--;
-            return request_queue[closest_cylinder_location];
+            tmp = request_queue[closest_cylinder_location];
+
+            for(i = closest_cylinder_location; i < *queue_cnt-1; i++) {
+                request_queue[i] = request_queue[i+1];
+            }
+            *queue_cnt-=1;
+            return tmp;
         }
         closest_cylinder_location = 0;
         closest_cylinder_size = request_queue[0].cylinder;
@@ -159,7 +181,13 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
                 closest_cylinder_size = request_queue[i].cylinder;
             }
         }
-        return request_queue[closest_cylinder_location];
+        tmp = request_queue[closest_cylinder_location];
+
+        for(i = closest_cylinder_location; i < *queue_cnt-1; i++) {
+            request_queue[i] = request_queue[i+1];
+        }
+        *queue_cnt-=1;
+        return tmp;
     }
 }
 struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder) {

@@ -91,7 +91,7 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
                 shortest_arrival_location = i;
                 shortest_arrival_time = request_queue[i].arrival_timestamp;
                 first_guess = 0;
-            } else (request_queue[i].arrival_timestamp < shortest_arrival_time) {
+            } else if(request_queue[i].arrival_timestamp < shortest_arrival_time) {
                 shortest_arrival_location = i;
                 shortest_arrival_time = request_queue[i].arrival_timestamp;
             }
@@ -111,7 +111,7 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
                     closest_cylinder_location = i;
                     closest_cylinder_size = request_queue[i].cylinder;
                     first_guess = 0;
-                } else (request_queue[i].cylinder < closest_cylinder_size) {
+                } else if(request_queue[i].cylinder < closest_cylinder_size) {
                     closest_cylinder_location = i;
                     closest_cylinder_size = request_queue[i].cylinder;
                 }
@@ -141,7 +141,7 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
                     closest_cylinder_location = i;
                     closest_cylinder_size = request_queue[i].cylinder;
                     first_guess = 0;
-                } else (request_queue[i].cylinder > closest_cylinder_size) {
+                } else if(request_queue[i].cylinder > closest_cylinder_size) {
                     closest_cylinder_location = i;
                     closest_cylinder_size = request_queue[i].cylinder;
                 }

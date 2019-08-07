@@ -26,9 +26,7 @@ struct RCB handle_request_arrival_look(struct RCB request_queue[QUEUEMAX],int *q
     if(isNULLRCB(current_request)) {
         return new_request;
     } else {
-        // printf("curr request %d\t", current_request.request_id);
-        // printf("new request %d\t", new_request.request_id);
-
+        printf("Here curr request %d", current_request.request_id);
         request_queue[*queue_cnt] = new_request;
         (*queue_cnt)++;
         return current_request;

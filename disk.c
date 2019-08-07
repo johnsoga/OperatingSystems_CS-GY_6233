@@ -1,8 +1,7 @@
 #include "oslabs.h"
-#include <stdio.h>
+#include <stdlib.h>
 
 int isNULLRCB(struct RCB request);
-
 int isNULLRCB(struct RCB request) {
 
     if (request.request_id == 0 && request.arrival_timestamp == 0 && request.cylinder == 0 && request.address == 0 && request.process_id == 0) {
@@ -192,5 +191,45 @@ struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int
 }
 struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder) {
 
-    struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder);
+    struct RCB NULLRCB, tmp;
+    int i, first_guess, closest_cylinder_size, closest_cylinder_location, abs;
+
+    if(*queue_cnt == 0) {
+        NULLRCB.request_id = 0;
+        NULLRCB.arrival_timestamp = 0;
+        NULLRCB.cylinder = 0;
+        NULLRCB.address = 0;
+        NULLRCB.process_id = 0;
+
+        return NULLRCB;
+    }
+
+    first_guess = 1;
+    for(i = 0; i < *queue_cnt; i++) {
+        if(abs(request_queue[i].cylinder - current_cylinder) > 0) {
+            if(first_guess) {
+                closest_cylinder_location = i;
+                closest_cylinder_size = request_queue[i].cylinder;
+                abs = abs(request_queue[i].cylinder - current_cylinder);
+                first_guess = 0;
+            } else if(abs(request_queue[i].cylinder - current_cylinder) < abs) {
+                closest_cylinder_location = i;
+                closest_cylinder_size = request_queue[i].cylinder;
+                abs = abs(request_queue[i].cylinder - current_cylinder);
+            } else if(abs(request_queue[i].cylinder - current_cylinder) == abs) {
+                if(request_queue[i].arrival_timestamp < request_queue[closest_cylinder_location].arrival_timestamp) {
+                    closest_cylinder_location = i;
+                }
+            }
+        }
+    }
+
+    tmp = request_queue[closest_cylinder_location];
+
+    for(i = closest_cylinder_location; i < *queue_cnt-1; i++) {
+        request_queue[i] = request_queue[i+1];
+    }
+    *queue_cnt-=1;
+    return tmp;
+
 }

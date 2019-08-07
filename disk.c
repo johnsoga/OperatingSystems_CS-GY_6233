@@ -22,6 +22,7 @@ struct RCB handle_request_arrival_fcfs(struct RCB request_queue[QUEUEMAX], int *
 }
 struct RCB handle_request_arrival_look(struct RCB request_queue[QUEUEMAX],int *queue_cnt, struct RCB current_request, struct RCB new_request, int timestamp) {
 
+    printf("count %d", *queue_cnt);
     if(isNULLRCB(current_request)) {
         return new_request;
     } else {

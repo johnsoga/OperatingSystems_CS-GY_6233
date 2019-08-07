@@ -26,7 +26,6 @@ struct RCB handle_request_arrival_look(struct RCB request_queue[QUEUEMAX],int *q
     if(isNULLRCB(current_request)) {
         return new_request;
     } else {
-        printf("Here curr request %d", current_request.request_id);
         request_queue[*queue_cnt] = new_request;
         (*queue_cnt)++;
         return current_request;
@@ -38,7 +37,29 @@ struct RCB handle_request_arrival_sstf(struct RCB request_queue[QUEUEMAX],int *q
 }
 struct RCB handle_request_completion_fcfs(struct RCB request_queue[QUEUEMAX],int *queue_cnt) {
 
-    return request_queue[0];
+    struct RCB NULLRCB, tmp;
+    int i, shortest_arrival_time, shortest_arrival_location;
+
+    if(*queue_cnt == 0) {
+        NULLRCB.request_id = 0;
+        NULLRCB.arrival_timestamp = 0;
+        NULLRCB.cylinder = 0;
+        NULLRCB.address = 0;
+        NULLRCB.process_id = 0;
+
+        return NULLPCB;
+    }
+
+    shortest_arrival_time = request_queue[0].arrival_timestamp;
+    shortest_arrival_location = 0;
+    for(i = 1; i < *queue_cnt; i++) {
+        if(request_queue[i].arrival_timestamp < shortest_arrival_time) {
+            shortest_arrival_time = request_queue[i].arrival_timestamp;
+            shortest_arrival_location = i;
+        }
+    }
+    
+    return request_queue[shortest_arrival_location];
 }
 struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int  *queue_cnt, int current_cylinder, int scan_direction) {
 

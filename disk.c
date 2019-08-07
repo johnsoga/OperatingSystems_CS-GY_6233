@@ -70,7 +70,97 @@ struct RCB handle_request_completion_fcfs(struct RCB request_queue[QUEUEMAX],int
 }
 struct RCB handle_request_completion_look(struct RCB request_queue[QUEUEMAX],int  *queue_cnt, int current_cylinder, int scan_direction) {
 
-    return request_queue[0];
+    struct RCB NULLRCB, tmp;
+    int i, first_guess, return_rcb, shortest_arrival_time, shortest_arrival_location, closest_cylinder_size, closest_cylinder_location;
+
+    if(*queue_cnt == 0) {
+        NULLRCB.request_id = 0;
+        NULLRCB.arrival_timestamp = 0;
+        NULLRCB.cylinder = 0;
+        NULLRCB.address = 0;
+        NULLRCB.process_id = 0;
+
+        return NULLRCB;
+    }
+
+    first_guess = 1;
+    shortest_arrival_location = -1;
+    for(i = 0; i < *queue_cnt; i++) {
+        if(request_queue[i].cylinder == current_cylinder) {
+            if(first_guess) {
+                shortest_arrival_location = i;
+                shortest_arrival_time = request_queue[i].arrival_timestamp;
+                first_guess = 0;
+            } else (request_queue[i].arrival_timestamp < shortest_arrival_time) {
+                shortest_arrival_location = i;
+                shortest_arrival_time = request_queue[i].arrival_timestamp;
+            }
+        }
+    }
+    if(shortest_arrival_location > 0) {
+        (*queue_cnt)--;
+        return request_queue[shortest_arrival_location];
+    }
+
+    if(scan_direction == 1) {
+        first_guess = 1;
+        closest_cylinder_location = -1;
+        for(i = 0; i < *queue_cnt; i++) {
+            if(request_queue[i].cylinder > current_cylinder) {
+                if(first_guess) {
+                    closest_cylinder_location = i;
+                    closest_cylinder_size = request_queue[i].cylinder;
+                    first_guess = 0;
+                } else (request_queue[i].cylinder < closest_cylinder_size) {
+                    closest_cylinder_location = i;
+                    closest_cylinder_size = request_queue[i].cylinder;
+                }
+            }
+        }
+        if(closest_cylinder_location > 0) {
+            (*queue_cnt)--;
+            return request_queue[closest_cylinder_location];
+        }
+        closest_cylinder_location = 0;
+        closest_cylinder_size = request_queue[0].cylinder;
+        for(i = 1; i < *queue_cnt; i++) {
+            if(request_queue[i].cylinder > closest_cylinder_size) {
+                closest_cylinder_location = i;
+                closest_cylinder_size = request_queue[i].cylinder;
+            }
+        }
+        return request_queue[closest_cylinder_location];
+    }
+
+    if(scan_direction == 0) {
+        first_guess = 1;
+        closest_cylinder_location = -1;
+        for(i = 0; i < *queue_cnt; i++) {
+            if(request_queue[i].cylinder < current_cylinder) {
+                if(first_guess) {
+                    closest_cylinder_location = i;
+                    closest_cylinder_size = request_queue[i].cylinder;
+                    first_guess = 0;
+                } else (request_queue[i].cylinder > closest_cylinder_size) {
+                    closest_cylinder_location = i;
+                    closest_cylinder_size = request_queue[i].cylinder;
+                }
+            }
+        }
+        if(closest_cylinder_location > 0) {
+            (*queue_cnt)--;
+            return request_queue[closest_cylinder_location];
+        }
+        closest_cylinder_location = 0;
+        closest_cylinder_size = request_queue[0].cylinder;
+        for(i = 1; i < *queue_cnt; i++) {
+            if(request_queue[i].cylinder < closest_cylinder_size) {
+                closest_cylinder_location = i;
+                closest_cylinder_size = request_queue[i].cylinder;
+            }
+        }
+        return request_queue[closest_cylinder_location];
+    }
 }
 struct RCB handle_request_completion_sstf(struct RCB request_queue[QUEUEMAX],int *queue_cnt,int current_cylinder) {
 
